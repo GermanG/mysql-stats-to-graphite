@@ -214,7 +214,7 @@ def ss_get_mysql_stats(options):
         cursor.execute('SHOW PROCESSLIST')
         result = cursor.fetchall()
         for row in result:
-            state = row.get('state')
+            state = row.get('State')
             if state is None:
                 state = 'NULL'
             if state == '':
@@ -812,7 +812,7 @@ def get_innodb_array(text):
             result['last_checkpoint'] = val
             
         # BUFFER POOL AND MEMORY
-        elif line.find('Total memory allocated') == 0:
+        elif line.find('Total memory allocated') == 0 and row[3] != 'by' : 
             # Total memory allocated 29642194944; in additional pool allocated 0
             result['total_mem_alloc'] = to_int(row[3])
             result['additional_pool_alloc'] = to_int(row[8])
